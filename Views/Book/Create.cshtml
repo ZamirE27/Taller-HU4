@@ -1,0 +1,39 @@
+@model Taller_HU4.Models.Book
+
+<h2>Create Book</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Tittle" class="control-label">Tittle</label>
+        <input asp-for="Tittle" class="form-control" placeholder="Enter book title" />
+        <span asp-validation-for="Tittle" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Author" class="control-label">Author</label>
+        <input asp-for="Author" class="form-control" placeholder="Enter author name" />
+        <span asp-validation-for="Author" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Code" class="control-label">Code</label>
+        <input asp-for="Code" class="form-control" placeholder="Unique book code" />
+        <span asp-validation-for="Code" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Available" class="control-label">Available</label>
+        <input asp-for="Available" class="form-control" type="number" min="0" placeholder="Number of available copies" />
+        <span asp-validation-for="Available" class="text-danger"></span>
+    </div>
+
+    
+    <div class="form-group">
+        <label for="UserId">Assign to User (optional)</label>
+        <select asp-for="UserId" class="form-control" asp-items="ViewBag.Users">
+            <option value="">-- Select a user --</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
