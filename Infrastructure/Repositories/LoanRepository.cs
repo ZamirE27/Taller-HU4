@@ -3,9 +3,14 @@ using Taller_HU4.Models;
 
 namespace Taller_HU4.Repository;
 
-public class LoanRepository : IRepository<Loan>
+public class LoanRepository : ILoanRepository<Loan>
 {
     public Task<IEnumerable<Loan>> GetAllAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Loan>? GetBookAsync(Loan entity)
     {
         throw new NotImplementedException();
     }

@@ -8,17 +8,13 @@ public class Book
     public string Code {get; set;}
     public int Available {get; set;}
     
-    public int UserId {get; set;}
-    public User? User {get; set;}
-    
     public List<Loan> Loans { get; set; } = new List<Loan>();
     public Book() {}
-    public Book(string tittle, string author, string code, int available,  int userId)
+    public Book(string tittle, string author, string code, int available)
     {
         Tittle = tittle;
         Author = author;
         Code = code;
         Available = available;
-        UserId = userId;
     }
 }

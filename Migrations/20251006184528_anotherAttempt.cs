@@ -5,7 +5,7 @@
 namespace Taller_HU4.Migrations
 {
     /// <inheritdoc />
-    public partial class Prueba : Migration
+    public partial class anotherAttempt : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

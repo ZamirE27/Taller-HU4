@@ -5,10 +5,10 @@ using Taller_HU4.Models;
 
 namespace Taller_HU4.Repository;
 
-public class Repository : IRepository<User>
+public class UserRepository : IUserRepository<User>
 {
     private readonly AppDbContext _context;
-    public Repository(AppDbContext context)
+    public UserRepository(AppDbContext context)
     {
         _context = context;
     }
@@ -17,38 +17,25 @@ public class Repository : IRepository<User>
         return await _context.Users.ToListAsync();
     }
 
-    public async Task<User> GetOneAsync(User entity)
+    public async Task<bool> DNIExistAsync(string DNI)
     {
-        if (entity == null)
-        {
-            return null;
-        }
-        return await _context.Users.FindAsync(entity.Id);
+        return  await _context.Users.AnyAsync(u => u.DocumentId == DNI);
+    }
+
+    public async Task<User?> GetOneAsync(User entity)
+    {
+        return await _context.Users.FirstOrDefaultAsync(u => u.Id == entity.Id);
     }
     
     public async Task<User> CreateAsync(User entity)
     {
-
-        try
-        {
-            _context.Users.Add(entity);
-            await _context.SaveChangesAsync();
-            return entity;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Error Creating new user: {e.Message}");
-            throw;
-        }
-        
+        _context.Users.Add(entity);
+        await _context.SaveChangesAsync();
+        return entity;
     }
 
     public async Task<User> UpdateAsync(User entity)
     {
-        if (entity == null)
-        {
-            return null;
-        }
         _context.Users.Update(entity);
         await _context.SaveChangesAsync();
         return entity;
@@ -56,10 +43,6 @@ public class Repository : IRepository<User>
 
     public async Task<User> DeleteAsync(User entity)
     {
-        if (entity == null)
-        {
-            return null;
-        }
 
         _context.Users.Remove(entity);
         await _context.SaveChangesAsync();

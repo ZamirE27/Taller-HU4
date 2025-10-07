@@ -12,7 +12,6 @@
             <th>Author</th>
             <th>Code</th>
             <th>Available</th>
-            <th>User Assigned</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -25,7 +24,6 @@
             <td>@book.Author</td>
             <td>@book.Code</td>
             <td>@book.Available</td>
-            <td>@book.User?.Name</td>
             <td>
                 <a asp-action="Edit" asp-route-id="@book.Id" class="btn btn-sm btn-warning">Edit</a>
                 <a asp-action="Delete" asp-route-id="@book.Id" class="btn btn-sm btn-danger">Delete</a>

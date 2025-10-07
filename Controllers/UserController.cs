@@ -8,20 +8,20 @@ namespace Taller_HU4.Controllers;
 
 public class UserController : Controller
 {
-    private readonly IRepository<User> Repository;
-    private readonly IRepository<Book> _bookRepository;
-    private readonly IRepository<Loan> _loanRepository;
+    private readonly IUserRepository<User> _userRepository;
+    private readonly IBookRepository<Book> _bookRepository;
+    private readonly ILoanRepository<Loan> _loanRepository;
     
-    public UserController(IRepository<User> repository, IRepository<Book> bookRepository, IRepository<Loan> loanRepository)
+    public UserController(IUserRepository<User> userRepository, IBookRepository<Book> bookRepository, ILoanRepository<Loan> loanRepository)
     {
-        Repository = repository;
+        _userRepository = userRepository;
         _bookRepository = bookRepository;
         _loanRepository = loanRepository;
     }
 
     public async Task<IActionResult> Index()
     {
-        var users = await Repository.GetAllAsync();
+        var users = await _userRepository.GetAllAsync();
         
         return View(users);
     }
@@ -29,19 +29,44 @@ public class UserController : Controller
     [HttpGet]
     public async Task<IActionResult> Create()
     {
-        var books = await _bookRepository.GetAllAsync();
-        ViewBag.Books = books;
         return View();
     }
     
     [HttpPost]
     public async Task<IActionResult> Create(User user)
     {
-        if (ModelState.IsValid)
+        try
         {
-            await Repository.CreateAsync(user);
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                bool DNIExist = await _userRepository.DNIExistAsync(user.DocumentId);
+                if(DNIExist)
+                {
+                    ModelState.AddModelError(string.Empty, "Document ID already exists");
+                    return View(user);
+                }
+                await _userRepository.CreateAsync(user);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(user);
         }
-        return View(user);
+        catch (Exception e)
+        {
+            TempData["Error"] = e.Message;
+            throw;
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Delete(User user)
+    {
+        if (user.Id == null)
+        {
+            ModelState.AddModelError(string.Empty, "User not found");
+            return View(user);
+        }
+        await _userRepository.DeleteAsync(user);
+        return RedirectToAction(nameof(Index));
     }
 }

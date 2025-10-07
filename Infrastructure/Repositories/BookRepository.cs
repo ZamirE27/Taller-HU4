@@ -1,11 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Taller_HU4.Infrastructure;
 using Taller_HU4.Interfaces;
 using Taller_HU4.Models;
 
 namespace Taller_HU4.Repository;
 
-public class BookRepository : IRepository<Book>
+public class BookRepository : IBookRepository<Book>
 {
     private readonly AppDbContext _context;
     public BookRepository(AppDbContext context)
@@ -14,42 +15,30 @@ public class BookRepository : IRepository<Book>
     }
     public async Task<IEnumerable<Book>> GetAllAsync()
     {
-        var books = await _context.Books
-            .Include(b => b.User)
+        return await _context.Books
             .ToListAsync();
-        return await _context.Books.ToListAsync();
+    }
+
+    public async Task<bool> CodeExistAsync(string code)
+    {
+        return  await _context.Books.AnyAsync(b => b.Code == code);
     }
 
     public async Task<Book> GetOneAsync(Book entity)
     {
-        if (entity == null)
-        {
-            return null;
-        }
-        return await _context.Books.FindAsync(entity.Id);
+        return (await _context.Books
+            .FirstOrDefaultAsync(b => b.Id == entity.Id))!;
     }
     
     public async Task<Book> CreateAsync(Book entity)
     {
-        try
-        {
-            _context.Books.Add(entity);
-            await _context.SaveChangesAsync();
-            return entity;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Error Creating new Book: {e.Message}");
-            throw;
-        }
+        _context.Books.Add(entity);
+        await _context.SaveChangesAsync();
+        return entity;
     }
 
     public async Task<Book> UpdateAsync(Book entity)
     {
-        if (entity == null)
-        {
-            return null;
-        }
         _context.Books.Update(entity);
         await _context.SaveChangesAsync();
         return entity;
@@ -57,10 +46,6 @@ public class BookRepository : IRepository<Book>
 
     public async Task<Book> DeleteAsync(Book entity)
     {
-        if (entity == null)
-        {
-            return null;
-        }
 
         _context.Books.Remove(entity);
         await _context.SaveChangesAsync();

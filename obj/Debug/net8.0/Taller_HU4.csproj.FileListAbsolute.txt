@@ -116,6 +116,7 @@
 /home/zamir-estrada/Documents/C#/MVC_ASP.Net/Taller_HU4/obj/Debug/net8.0/Taller_HU4.MvcApplicationPartsAssemblyInfo.cache
 /home/zamir-estrada/Documents/C#/MVC_ASP.Net/Taller_HU4/obj/Debug/net8.0/Taller_HU4.RazorAssemblyInfo.cache
 /home/zamir-estrada/Documents/C#/MVC_ASP.Net/Taller_HU4/obj/Debug/net8.0/Taller_HU4.RazorAssemblyInfo.cs
+/home/zamir-estrada/Documents/C#/MVC_ASP.Net/Taller_HU4/obj/Debug/net8.0/Taller_HU4.sourcelink.json
 /home/zamir-estrada/Documents/C#/MVC_ASP.Net/Taller_HU4/obj/Debug/net8.0/staticwebassets.build.json
 /home/zamir-estrada/Documents/C#/MVC_ASP.Net/Taller_HU4/obj/Debug/net8.0/staticwebassets.development.json
 /home/zamir-estrada/Documents/C#/MVC_ASP.Net/Taller_HU4/obj/Debug/net8.0/staticwebassets/msbuild.Taller_HU4.Microsoft.AspNetCore.StaticWebAssets.props

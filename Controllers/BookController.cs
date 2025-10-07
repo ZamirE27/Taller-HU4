@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Taller_HU4.Infrastructure;
 using Taller_HU4.Interfaces;
 using Taller_HU4.Models;
 
@@ -7,11 +8,12 @@ namespace Taller_HU4.Controllers;
 
 public class BookController : Controller
 {
-    private readonly IRepository<User> _userRepository;
-    private readonly IRepository<Book> _bookRepository;
-    private readonly IRepository<Loan> _loanRepository;
+    private readonly AppDbContext _context;
+    private readonly IUserRepository<User> _userRepository;
+    private readonly IBookRepository<Book> _bookRepository;
+    private readonly ILoanRepository<Loan> _loanRepository;
     
-    public BookController(IRepository<User> Userepository, IRepository<Book> bookRepository, IRepository<Loan> loanRepository)
+    public BookController(IUserRepository<User> Userepository, IBookRepository<Book> bookRepository, ILoanRepository<Loan> loanRepository)
     {
         _userRepository = Userepository;
         _bookRepository = bookRepository;
@@ -28,26 +30,44 @@ public class BookController : Controller
     [HttpGet]
     public async Task<IActionResult> Create()
     {
-        var users = await _userRepository.GetAllAsync();
-        ViewBag.Users = new SelectList(users, "Id", "Name");
         return View();
     }
     
     [HttpPost]
     public async Task<IActionResult> Create(Book book)
     {
-        if (book.UserId == 0)
+        try
         {
-            ModelState.AddModelError("User Id", "You should select a user");
+
+            if (ModelState.IsValid)
+            {
+                bool codeExist = await _bookRepository.CodeExistAsync(book.Code);
+                if (codeExist)
+                {
+                    ModelState.AddModelError(string.Empty, "Code already exist");
+                    return View(book);
+                }
+                await _bookRepository.CreateAsync(book);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(book);
         }
-        if (ModelState.IsValid)
+        catch (Exception ex)
         {
-            await _bookRepository.CreateAsync(book);
+            TempData["ErrorMessage"] = ex.Message;
             return RedirectToAction(nameof(Index));
         }
-        var users = await _userRepository.GetAllAsync();
-        ViewBag.Users = new SelectList(users, "Id", "Name");
+    }
     
-        return View(book);
+    [HttpGet]
+    public async Task<IActionResult> Delete(Book book)
+    {
+        if (book.Id == null)
+        {
+            ModelState.AddModelError(string.Empty, "User not found");
+            return View(book);
+        }
+        await _bookRepository.DeleteAsync(book);
+        return RedirectToAction(nameof(Index));
     }
 }

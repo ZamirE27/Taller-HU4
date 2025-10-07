@@ -45,7 +45,7 @@ namespace Taller_HU4.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -118,13 +118,9 @@ namespace Taller_HU4.Migrations
 
             modelBuilder.Entity("Taller_HU4.Models.Book", b =>
                 {
-                    b.HasOne("Taller_HU4.Models.User", "User")
+                    b.HasOne("Taller_HU4.Models.User", null)
                         .WithMany("Books")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Taller_HU4.Models.Loan", b =>

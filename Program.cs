@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
 using Taller_HU4.Infrastructure;
 using Taller_HU4.Interfaces;
 using Taller_HU4.Models;
@@ -7,9 +8,9 @@ using Taller_HU4.Repository;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddScoped<IRepository<User>, Repository>();
-builder.Services.AddScoped<IRepository<Book>, BookRepository>();
-builder.Services.AddScoped<IRepository<Loan>, LoanRepository>();
+builder.Services.AddScoped<IUserRepository<User>, UserRepository>();
+builder.Services.AddScoped<IBookRepository<Book>, BookRepository>();
+builder.Services.AddScoped<ILoanRepository<Loan>, LoanRepository>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
@@ -42,6 +43,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller}/{action=Index}/{id?}");
+
 
 app.Run();

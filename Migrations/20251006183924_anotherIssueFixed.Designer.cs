@@ -12,8 +12,8 @@ using Taller_HU4.Infrastructure;
 namespace Taller_HU4.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251005062210_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251006183924_anotherIssueFixed")]
+    partial class anotherIssueFixed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,8 +27,11 @@ namespace Taller_HU4.Migrations
 
             modelBuilder.Entity("Taller_HU4.Models.Book", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Author")
                         .IsRequired()
@@ -39,16 +42,19 @@ namespace Taller_HU4.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Tittle")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -66,10 +72,6 @@ namespace Taller_HU4.Migrations
                     b.Property<int>("BookId")
                         .HasColumnType("int");
 
-                    b.Property<string>("BookId1")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
                     b.Property<DateTime>("LoanDate")
                         .HasColumnType("datetime(6)");
 
@@ -78,7 +80,7 @@ namespace Taller_HU4.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookId1");
+                    b.HasIndex("BookId");
 
                     b.HasIndex("UserId");
 
@@ -95,7 +97,7 @@ namespace Taller_HU4.Migrations
 
                     b.Property<string>("DocumentId")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -111,25 +113,24 @@ namespace Taller_HU4.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DocumentId")
+                        .IsUnique();
+
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Taller_HU4.Models.Book", b =>
                 {
-                    b.HasOne("Taller_HU4.Models.User", "User")
+                    b.HasOne("Taller_HU4.Models.User", null)
                         .WithMany("Books")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Taller_HU4.Models.Loan", b =>
                 {
                     b.HasOne("Taller_HU4.Models.Book", "Book")
                         .WithMany("Loans")
-                        .HasForeignKey("BookId1")
+                        .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
