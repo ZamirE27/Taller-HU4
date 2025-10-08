@@ -72,7 +72,7 @@ public class BookController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(Book book)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
             return View(book);
         }
