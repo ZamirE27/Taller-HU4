@@ -5,10 +5,6 @@
       "PackagePath": "staticwebassets/Taller_HU4.bundle.scp.css"
     },
     {
-      "Id": "/home/zamir-estrada/Documents/C#/MVC_ASP.Net/Taller_HU4/wwwroot/css/Create.css",
-      "PackagePath": "staticwebassets/css/Create.css"
-    },
-    {
       "Id": "/home/zamir-estrada/Documents/C#/MVC_ASP.Net/Taller_HU4/wwwroot/css/site.css",
       "PackagePath": "staticwebassets/css/site.css"
     },

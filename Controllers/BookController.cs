@@ -58,6 +58,42 @@ public class BookController : Controller
             return RedirectToAction(nameof(Index));
         }
     }
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
+    {
+        var books = await _bookRepository.GetOneAsync(id);
+        if (books == null)
+        {
+            return NotFound();
+        }
+        return View(books);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(Book book)
+    {
+        if (ModelState.IsValid)
+        {
+            return View(book);
+        }
+        try
+        {
+            var bookExist = await _bookRepository.GetOneAsync(book.Id);
+            if (bookExist == null)
+            {
+                ModelState.AddModelError(string.Empty, "Book not found");
+                return View(book);
+            }
+            await _bookRepository.UpdateAsync(book);
+            return RedirectToAction(nameof(Index));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error: Udating Book: {e.Message}");
+            ModelState.AddModelError(string.Empty, "An error occured Updating Book");
+            throw;
+        }
+    }
     
     [HttpGet]
     public async Task<IActionResult> Delete(Book book)

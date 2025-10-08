@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "1mIVPH4jVwCehPiv6CRDzIR8Eud8S41s8/H8Ek1tEkA=",
+  "Hash": "DuhDlXv5rQz16qJkiD+EmQnWKHi30SnNJstPDfl+L/Q=",
   "Source": "Taller_HU4",
   "BasePath": "_content/Taller_HU4",
   "Mode": "Default",
@@ -53,25 +53,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "/home/zamir-estrada/Documents/C#/MVC_ASP.Net/Taller_HU4/obj/Debug/net8.0/scopedcss/projectbundle/Taller_HU4.bundle.scp.css"
-    },
-    {
-      "Identity": "/home/zamir-estrada/Documents/C#/MVC_ASP.Net/Taller_HU4/wwwroot/css/Create.css",
-      "SourceId": "Taller_HU4",
-      "SourceType": "Discovered",
-      "ContentRoot": "/home/zamir-estrada/Documents/C#/MVC_ASP.Net/Taller_HU4/wwwroot/",
-      "BasePath": "_content/Taller_HU4",
-      "RelativePath": "css/Create.css",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/css/Create.css"
     },
     {
       "Identity": "/home/zamir-estrada/Documents/C#/MVC_ASP.Net/Taller_HU4/wwwroot/css/site.css",

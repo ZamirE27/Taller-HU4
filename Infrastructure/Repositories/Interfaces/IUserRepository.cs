@@ -6,7 +6,7 @@ public interface IUserRepository<T> where T : User
 {
     Task<IEnumerable<T>> GetAllAsync();
     Task<bool> DNIExistAsync( string  DNI );
-    Task<T> GetOneAsync(T entity);
+    Task<T> GetOneAsync(int id);
     Task<T> CreateAsync(T entity);
     Task<T> UpdateAsync(T entity);
     Task<T> DeleteAsync(T entity);

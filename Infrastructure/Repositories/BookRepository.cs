@@ -24,10 +24,11 @@ public class BookRepository : IBookRepository<Book>
         return  await _context.Books.AnyAsync(b => b.Code == code);
     }
 
-    public async Task<Book> GetOneAsync(Book entity)
+    public async Task<Book?> GetOneAsync(int id)
     {
-        return (await _context.Books
-            .FirstOrDefaultAsync(b => b.Id == entity.Id))!;
+        return await _context.Books
+            .AsNoTracking()
+            .FirstOrDefaultAsync(b => b.Id == id);
     }
     
     public async Task<Book> CreateAsync(Book entity)

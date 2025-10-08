@@ -1,34 +1,37 @@
 @model Taller_HU4.Models.Book
 
-<h2>Create Book</h2>
+<h2>Edit Book</h2>
 
-<form asp-action="Create" method="post">
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id"/>
+
     <div class="form-group">
         <label asp-for="Tittle" class="control-label">Tittle</label>
-        <input asp-for="Tittle" class="form-control" placeholder="Enter book title" />
+        <input asp-for="Tittle" class="form-control" placeholder="Enter book title"/>
         <span asp-validation-for="Tittle" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="Author"  class="control-label">Author</label>
-        <input asp-for="Author" class="form-control" placeholder="Enter author name" />
+        <input asp-for="Author" class="form-control" placeholder="Enter author name"/>
         <span asp-validation-for="Author" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="Code" class="control-label">Code</label>
-        <input asp-for="Code" class="form-control" placeholder="Unique book code" />
+        <input asp-for="Code" class="form-control" placeholder="Unique book code"/>
         <span asp-validation-for="Code" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="Available" class="control-label">Available</label>
-        <input asp-for="Available" class="form-control" type="number" min="0" placeholder="Number of available copies" />
+        <input asp-for="Available" class="form-control" type="number" min="0" placeholder="Number of available copies"/>
         <span asp-validation-for="Available" class="text-danger"></span>
     </div>
     <br>
     <div class="form-group">
-        <input type="submit" value="Save" class="btn btn-primary" />
+        <input type="submit" value="Save changes" class="btn btn-primary"/>
         <a asp-action="Index" class="btn btn-danger">Cancel</a>
     </div>
 </form>
+

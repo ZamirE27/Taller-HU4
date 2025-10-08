@@ -59,13 +59,54 @@ public class UserController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Delete(User user)
+    public async Task<IActionResult> Edit(int id)
     {
-        if (user.Id == null)
+        var user = await _userRepository.GetOneAsync(id);
+        if (user == null)
         {
-            ModelState.AddModelError(string.Empty, "User not found");
+            return NotFound();
+        }
+        return View(user);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(User user)
+    {
+        if (!ModelState.IsValid)
+        {
             return View(user);
         }
+
+        try
+        {
+            var existingUser = await _userRepository.GetOneAsync(user.Id);
+            if (existingUser == null)
+            {
+                ModelState.AddModelError(string.Empty, "User not found");
+                return View(user);
+            }
+
+            await _userRepository.UpdateAsync(user);
+            return RedirectToAction(nameof(Index));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating user: {ex.Message}");
+            ModelState.AddModelError(string.Empty, "An error occurred while updating the user.");
+            return View(user);
+        }
+    }
+
+
+    [HttpGet]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var user = await _userRepository.GetOneAsync(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
         await _userRepository.DeleteAsync(user);
         return RedirectToAction(nameof(Index));
     }

@@ -6,7 +6,7 @@ public interface IBookRepository<T> where T : Book
 {
     Task<bool> CodeExistAsync( string  code );
     Task<IEnumerable<T>> GetAllAsync();
-    Task<T> GetOneAsync(T entity);
+    Task<T> GetOneAsync(int id);
     Task<T> CreateAsync(T entity);
     Task<T> UpdateAsync(T entity);
     Task<T> DeleteAsync(T entity);

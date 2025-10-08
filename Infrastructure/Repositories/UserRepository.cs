@@ -22,9 +22,11 @@ public class UserRepository : IUserRepository<User>
         return  await _context.Users.AnyAsync(u => u.DocumentId == DNI);
     }
 
-    public async Task<User?> GetOneAsync(User entity)
+    public async Task<User?> GetOneAsync(int id)
     {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Id == entity.Id);
+        return await _context.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Id == id);
     }
     
     public async Task<User> CreateAsync(User entity)
